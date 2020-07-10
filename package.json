@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "download-file": "^0.1.5",
+    "fluent-ffmpeg": "^2.1.2",
     "node-fetch": "^2.6.0"
   }
 }

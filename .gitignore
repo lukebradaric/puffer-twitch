@@ -1,2 +1,5 @@
 secret.json
 clips/*
+videos/*
+ffmpeg.exe
+ffprobe.exe
