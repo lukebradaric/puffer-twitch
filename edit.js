@@ -1,15 +1,43 @@
 const fluent_ffmpeg = require('fluent-ffmpeg');
-const videoIntro = './intro.mp4'
+
+//INTROS
+const defaultIntro = './intros/Default.mp4'
+const overwatchIntro = './intros/Overwatch.mp4'
+const leagueOfLegendsIntro = './intros/LeagueOfLegends.mp4'
+const worldOfWarcraftIntro = './intros/WorldOfWarcraft.mp4' //NOT ADDED YET
+const callOfDutyModernWarfareIntro = '' //NOT ADDED YET
+const fortniteIntro = '' //NOT ADDED YET
+const valorantIntro = './intros/Default.mp4' //NOT ADDED YET
+const counterStrikeGlobalOffensiveIntro = '' //NOT ADDED YET
+
+let nextIntro = defaultIntro //Intro for next video //SET A DEFAULT INTRO
 
 let totalClips = 0 //Total number of clips to combine
 let currentClipsProcessed = 0 //Current number of clips processed
 
 let processedClips = [] //Queue of clips processed
 
+let videoName //Name of next video being Created
+
 module.exports = {
     //Proccessed clips to be merged/combined
-    combine: function (vids)
+    combine: function (vids, gameCategory, finalVideoName)
     {
+        //Set name of video from parameter
+        videoName = finalVideoName
+        console.log('Creating video: ' + videoName);
+
+        //If is game clip and not channel clip
+        if (gameCategory != null)
+        {
+            //Select next intro based off of game
+            nextIntro = this.gameCategoryToIntroPath(gameCategory)
+            console.log('Selected game intro: ' + nextIntro.substring(8, nextIntro.length));
+        } else
+        {
+            console.log('No game category, using default intro...');
+        }
+
         //Set total clips to the queue passed in
         totalClips = vids.length
 
@@ -37,6 +65,11 @@ module.exports = {
                 {
                     processedClips.push(vid)
                     currentClipsProcessed += 1
+                    //If this is the final processed clip, merge all clips
+                    if (currentClipsProcessed == totalClips)
+                    {
+                        this.merge(processedClips)
+                    }
                 }
             })
         }
@@ -75,10 +108,16 @@ module.exports = {
 
         let mergedVideo = fluent_ffmpeg()
 
-        let videoPath = './videos/mergedVideo.mp4'
+        let videoPath = './videos/' + videoName
 
         //Avoid EventEmitter memory leak
         process.setMaxListeners(0)
+
+        //Add intro to front of video
+        mergedVideo = mergedVideo.addInput(nextIntro).on('error', (err) =>
+        {
+            console.log(err.message)
+        })
 
         //Add each video to be merged
         for (let vid of vids)
@@ -97,7 +136,37 @@ module.exports = {
             })
             .on('end', () =>
             {
-                console.log('Video edit finished! Send to: ' + videoPath);
+                console.log('Video edit finished! Sent to: ' + videoPath);
             })
+    },
+    gameCategoryToIntroPath: function (gameCategory)
+    {
+        switch (gameCategory)
+        {
+            case 'Overwatch':
+                return overwatchIntro
+                break
+            case 'League of Legends':
+                return leagueOfLegendsIntro
+                break
+            case 'Call of Duty: Modern Warfare':
+                return callOfDutyModernWarfareIntro
+                break
+            case 'Fortnite':
+                return fortniteIntro
+                break
+            case 'World of Warcraft':
+                return worldOfWarcraftIntro
+                break
+            case 'Valorant':
+                return valorantIntro
+                break
+            case 'Counter-Strike: Global Offensive':
+                return counterStrikeGlobalOffensiveIntro
+                break
+            default:
+                return defaultIntro
+                break
+        }
     }
 }

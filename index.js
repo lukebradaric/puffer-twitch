@@ -8,6 +8,9 @@ let downloaded = [] //List of downloaded files
 const maxVideoLength = 600; //10 minutes
 let useMaxVideoLength = true //Should the video assembler care about max video length
 
+let gameCategory = null //Type of next vid, League of Legends, Overwatch, etc
+let finalVideoName = ''
+
 //Options for requesting twitch clips (Twitch API)
 const options = {
     headers: {
@@ -35,11 +38,14 @@ function createVideo(type, name, period, limit)
     //Check if time limit or clip limit
     if (limit == null)
     {
-        logLimit = maxVideoLength.toString() + ' seconds.'
+        logLimit = maxVideoLength.toString() + ' seconds'
     } else
     {
-        logLimit = limit.toString() + ' clips.'
+        logLimit = limit.toString() + ' clips'
     }
+
+    //Create video name EX (World of Warcraft-week-600 seconds.mp4)
+    finalVideoName = name + '-' + period + '-' + logLimit + '.mp4'
 
     //Change type to lowercase
     type = type.toLowerCase()
@@ -52,6 +58,7 @@ function createVideo(type, name, period, limit)
     if (type == 'game')
     {
         topClipsLink = tools.buildGameClipLink(name, period, limit)
+        gameCategory = name
     } else if (type == 'channel')
     {
         topClipsLink = tools.buildChannelClipLink(name, period, limit)
@@ -127,8 +134,8 @@ function downloadQueue()
             {
                 //If finished downloading, clear queue and stich files
                 queue = []
-                console.log('All files downloaded. Ready to be stitched...');
-                edit.combine(downloaded)
+                console.log('All files downloaded. Ready to be merged...');
+                edit.combine(downloaded, gameCategory, finalVideoName)
             }
         })
     }
@@ -138,4 +145,4 @@ function downloadQueue()
 //let clipLink = tools.buildChannelClipLink('kephrii', 'week', 3)
 //let clipLink = tools.buildGameClipLink('League of Legends', 'week', null)
 //downloadClips(clipLink)
-createVideo('game', 'Overwatch', 'week', null)
+createVideo('game', 'Valorant', 'week', 3)

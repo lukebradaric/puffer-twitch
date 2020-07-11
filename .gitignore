@@ -2,5 +2,6 @@ secret.json
 node_modules/*
 clips/*
 videos/*
+intros/*
 ffmpeg.exe
 ffprobe.exe
