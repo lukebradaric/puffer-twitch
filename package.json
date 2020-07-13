@@ -10,8 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bug-killer": "^4.4.4",
     "download-file": "^0.1.5",
     "fluent-ffmpeg": "^2.1.2",
-    "node-fetch": "^2.6.0"
+    "lien": "^3.3.0",
+    "node-fetch": "^2.6.0",
+    "opn": "^6.0.0",
+    "pretty-bytes": "^5.3.0",
+    "r-json": "^1.2.9",
+    "youtube-api": "^2.0.10"
   }
 }

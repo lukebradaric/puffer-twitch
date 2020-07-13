@@ -1,15 +1,26 @@
 const fetch = require('node-fetch') //url requests?
 const download = require('download-file') //download file from url
 const tools = require('./tools'); //custom tools (conversion & link building)
-const edit = require('./edit') //edit class
+const edit = require('./edit'); //edit class
+const upload = require('./upload');
+
 let dbg = false //Debug mode
+
 let queue = [] //Queue of videos to download
 let downloaded = [] //List of downloaded files
+
 const maxVideoLength = 600; //10 minutes
 let useMaxVideoLength = true //Should the video assembler care about max video length
 
 let gameCategory = null //Type of next vid, League of Legends, Overwatch, etc
-let finalVideoName = ''
+let finalVideoName = '' //Final name of the video created
+
+// let videoData = {
+//     videoPath: '',
+//     videoTitle: '',
+//     videoDescription: '',
+//     broadcasterList: '',
+// }
 
 //Options for requesting twitch clips (Twitch API)
 const options = {
@@ -28,12 +39,14 @@ const downloadOptions = {
 //Get top clips from a url
 function getTopClips(url)
 {
+    //Fetch top clips from generated url
     return fetch(url, options).then(res => res.json()).then(data => { return data })
 }
 
 //Create a video from game or channel (LIMIT to null for unlimited (or maxVidLength))
 function createVideo(type, name, period, limit)
 {
+    //Limit converted to string for logging
     let logLimit;
     //Check if time limit or clip limit
     if (limit == null)
@@ -53,11 +66,17 @@ function createVideo(type, name, period, limit)
     //Log video creation
     console.log('Creating a ' + type + ' video from ' + name + '. Period: ' + period + '. Limit: ' + logLimit);
 
+    //Set video upload details
+    upload.setVideoTitle(tools.buildVideoTitle(name, period))
+    //Set video tags
+    upload.setVideoTags(name)
+
     //Generate top clips link
     let topClipsLink;
     if (type == 'game')
     {
         topClipsLink = tools.buildGameClipLink(name, period, limit)
+        //If video type is game, set game category
         gameCategory = name
     } else if (type == 'channel')
     {
@@ -78,7 +97,10 @@ function downloadClips(topClipsLink)
     jn.then(result =>
     {
         //Log the result of the html fetch
-        if (dbg) console.log(result)
+        if (dbg) console.log(result['clips'][0]['broadcaster'])
+
+        //Create a new broadcast list to create video description with
+        let broadcasterList = []
 
         //For each clip, create an mp4 link and add it to queue
         for (let x of result['clips'])
@@ -92,33 +114,48 @@ function downloadClips(topClipsLink)
                 console.log('Downloading queue, video duration: ' + videoLength)
                 break
             }
+
+            //Add broadcaster to list if not already in list
+            if (!broadcasterList.includes(x['broadcaster']['display_name']))
+            {
+                broadcasterList.push(x['broadcaster']['display_name'])
+            }
+
+            //If debugging, print image link
+            if (dbg) console.log('Image Link: ' + imgLink)
+
             //Convert clip thumbnail into video link and add to queue
             let imgLink = x.thumbnails['small']
-            if (dbg) console.log('Image Link: ' + imgLink)
             let vidLink = tools.imgToVid(imgLink)
+
+            //Add new video link to queue to be downloaded
             queue.push(vidLink)
         }
+
+        //Set video upload details
+        upload.setVideoDescription(tools.buildVideoDescription(broadcasterList))
+
+        //Log the clips queue
+        if (dbg) console.log(queue)
 
         //call downloadQueue and download all clips in queue
         if (!dbg) downloadQueue()
 
-        //Log the clips queue
-        if (dbg) console.log(queue)
     })
 }
 
 //Download all files in the queue
 function downloadQueue()
 {
-    //Create link of last file to know when download queue is finished
+    //Count videos downloaded
     let downloadCount = 0
+    //Max download count to stop at
     let maxDownloadCount = queue.length
     console.log('Downloading ' + maxDownloadCount + ' files in queue...')
 
     //Loop through queue and download all files
     for (let link of queue)
     {
-        if (dbg) console.log('Downloading ' + link) //Log out file to download
         let videoName = tools.vidLinkToName(link) //Create name for file
         downloadOptions.filename = videoName; //Set the name of the next download
         download(link, downloadOptions, async function (err)
@@ -135,14 +172,12 @@ function downloadQueue()
                 //If finished downloading, clear queue and stich files
                 queue = []
                 console.log('All files downloaded. Ready to be merged...');
+                //Combine all videos together
                 edit.combine(downloaded, gameCategory, finalVideoName)
             }
         })
     }
 }
 
-//Build a link from tools (buildGameClipLink = top clips in a game category)
-//let clipLink = tools.buildChannelClipLink('kephrii', 'week', 3)
-//let clipLink = tools.buildGameClipLink('League of Legends', 'week', null)
-//downloadClips(clipLink)
-createVideo('game', 'Valorant', 'week', 3)
+//Function that starts everything and takes in basic input
+createVideo('game', 'Overwatch', 'day', 2)

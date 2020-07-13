@@ -3,5 +3,6 @@ node_modules/*
 clips/*
 videos/*
 intros/*
+credentials/*
 ffmpeg.exe
 ffprobe.exe

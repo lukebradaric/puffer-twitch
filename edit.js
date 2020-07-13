@@ -1,4 +1,5 @@
 const fluent_ffmpeg = require('fluent-ffmpeg');
+const upload = require('./upload');
 
 //INTROS
 const defaultIntro = './intros/Default.mp4'
@@ -10,6 +11,8 @@ const fortniteIntro = '' //NOT ADDED YET
 const valorantIntro = './intros/Default.mp4' //NOT ADDED YET
 const counterStrikeGlobalOffensiveIntro = '' //NOT ADDED YET
 
+const outro = './intros/Outro.mp4'
+
 let nextIntro = defaultIntro //Intro for next video //SET A DEFAULT INTRO
 
 let totalClips = 0 //Total number of clips to combine
@@ -20,7 +23,7 @@ let processedClips = [] //Queue of clips processed
 let videoName //Name of next video being Created
 
 module.exports = {
-    //Proccessed clips to be merged/combined
+    //Proccessed clips to be merged/combined, requires vids array, gameCategory (ex, overwaatch, LoL, null), and video name
     combine: function (vids, gameCategory, finalVideoName)
     {
         //Set name of video from parameter
@@ -46,6 +49,7 @@ module.exports = {
         //Proccess clips to check for correct resolution
         for (let vid of vids)
         {
+            //Check resolution of each video
             fluent_ffmpeg.ffprobe(vid, (err, data) =>
             {
                 if (err) console.log('Conversion Error: ' + err.message)
@@ -128,6 +132,12 @@ module.exports = {
             })
         }
 
+        //Add outro to end of video
+        mergedVideo = mergedVideo.addInput(outro).on('error', (err) =>
+        {
+            console.log(err.message)
+        })
+
         //Merge all videos into one
         mergedVideo.mergeToFile(videoPath, './tmp/')
             .on('error', (err) =>
@@ -137,8 +147,10 @@ module.exports = {
             .on('end', () =>
             {
                 console.log('Video edit finished! Sent to: ' + videoPath);
+                upload.video(videoPath)
             })
     },
+    //Find correct intro based on game category
     gameCategoryToIntroPath: function (gameCategory)
     {
         switch (gameCategory)
