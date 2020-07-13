@@ -1,8 +1,11 @@
 const fetch = require('node-fetch') //url requests?
 const download = require('download-file') //download file from url
+const readline = require('readline')
 const tools = require('./tools'); //custom tools (conversion & link building)
 const edit = require('./edit'); //edit class
 const upload = require('./upload');
+const { type } = require('os');
+const { create } = require('domain');
 
 let dbg = false //Debug mode
 
@@ -179,5 +182,52 @@ function downloadQueue()
     }
 }
 
+//Read console to create a video from user input
+function readConsole()
+{
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    })
+
+    let typeInput
+    let gameInput
+    let durationInput
+    let limitInput
+
+    //Read in type, game, duration, and limit
+    rl.question('(game|channel) Please enter type:   ', (answer) =>
+    {
+        typeInput = answer
+        rl.question('(Case Sensitive) Please enter game or channel name:   ', (answer) =>
+        {
+            gameInput = answer
+            rl.question('(day|week|month) Please enter duration:   ', (answer) =>
+            {
+                durationInput = answer
+                rl.question('Please enter clip limit or null for a ' + maxVideoLength + ' second video:   ', (answer) =>
+                {
+                    if (answer == 'null')
+                    {
+                        limitInput = null
+                    } else
+                    {
+                        limitInput = parseInt(answer)
+                    }
+                    rl.close()
+                })
+            })
+        })
+    })
+
+    //Generate video based on user input
+    rl.on('close', () =>
+    {
+        createVideo(typeInput, gameInput, durationInput, limitInput)
+    })
+
+}
+
 //Function that starts everything and takes in basic input
-createVideo('game', 'Overwatch', 'day', 2)
+//createVideo('game', 'Overwatch', 'day', 2)
+readConsole()

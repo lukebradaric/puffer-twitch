@@ -13,6 +13,9 @@ const valorantTags = ['valorant', 'valorant highlights', 'valorant clips', 'valo
 const callOfDutyModernWarfareTags = ['modern warfare', 'warzone', 'warzone twitch', 'modern warfare twitch', 'warzone moments', 'modern warfare moments', 'warzone highlights', 'warzone clips', 'modern warfare clips', 'modern warfare warzone', 'warzone streamers', 'modern warfare streamers']
 const counterStrikeGlobalOffensiveTags = ['csgo', 'csgo clips', 'csgo highlights', 'csgo pros', 'csgo twitch', 'csgo moments', 'counter strike', 'counter strike global offensive', 'csgo best moments', 'csgo plays', 'csgo best plays']
 const fortniteTags = ['fornite', 'fortnite twitch', 'ninja', 'fortnite moments', 'fortnite clips', 'fortnite streamers', 'fornite guide', 'fortnite stream', 'fortnite highlights']
+const escapeFromTarkovTags = ['tarkov', 'escape from tarkov', 'tarkov highlights', 'tarkov clips', 'escape from tarkov highlights', 'escape from tarkov clips', 'tarkov twitch', 'escape from tarkov twitch', 'tarkov twitch highlights', 'tarkov streamers', 'tarkov streams', 'shroud', 'pestily', 'tarkov guide']
+const hyperScapeTags = ['hyper scape', 'hyper scape twitch', 'hyperscape', 'hyperscale twitch', 'hyperscape highlights', 'hyper scape highlights', 'hyperscape clips', 'hyper scape clips']
+
 const defaultTags = ['twitch', 'twitch moments', 'twitch highlights', 'twitch clips', 'twitch gaming', 'twitch streamers', 'twitch lol']
 
 //Credentials from downloaded json file
@@ -145,6 +148,15 @@ module.exports = {
                 break
             case 'Fortnite':
                 tags = fortniteTags
+                break
+            case 'Counter-Strike: Global Offensive':
+                tags = counterStrikeGlobalOffensiveTags
+                break
+            case 'Hyper Scape':
+                tags = hyperScapeTags
+                break
+            case 'Escape From Tarkov':
+                tags = escapeFromTarkovTags
                 break
             default:
                 tags = defaultTags

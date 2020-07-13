@@ -1,15 +1,20 @@
 const fluent_ffmpeg = require('fluent-ffmpeg');
 const upload = require('./upload');
+const fs = require('fs')
 
 //INTROS
-const defaultIntro = './intros/Default.mp4'
 const overwatchIntro = './intros/Overwatch.mp4'
 const leagueOfLegendsIntro = './intros/LeagueOfLegends.mp4'
-const worldOfWarcraftIntro = './intros/WorldOfWarcraft.mp4' //NOT ADDED YET
-const callOfDutyModernWarfareIntro = '' //NOT ADDED YET
-const fortniteIntro = '' //NOT ADDED YET
-const valorantIntro = './intros/Default.mp4' //NOT ADDED YET
-const counterStrikeGlobalOffensiveIntro = '' //NOT ADDED YET
+const worldOfWarcraftIntro = './intros/WorldOfWarcraft.mp4'
+const callOfDutyModernWarfareIntro = './intros/ModernWarfare.mp4'
+const fortniteIntro = './intros/Fortnite.mp4'
+const valorantIntro = './intros/Valorant.mp4'
+const counterStrikeGlobalOffensiveIntro = './intros/CounterStrikeGlobalOffensive.mp4'
+const hyperScapeIntro = './intros/HyperScape.mp4'
+const escapeFromTarkovIntro = './intros/EscapeFromTarkov.mp4'
+
+
+const defaultIntro = './intros/Default.mp4' //Default intro for non custom game
 
 const outro = './intros/Outro.mp4'
 
@@ -77,6 +82,7 @@ module.exports = {
                 }
             })
         }
+
     },
     //Resize video to 1920x1080 and rewrite path in queue array
     resizeVideo: function (vid)
@@ -108,7 +114,7 @@ module.exports = {
     //Merges clips into one large clip
     merge: function (vids)
     {
-        console.log('Merging videos together...');
+        console.log('Video resolutions all matching.');
 
         let mergedVideo = fluent_ffmpeg()
 
@@ -138,6 +144,23 @@ module.exports = {
             console.log(err.message)
         })
 
+        //If path of video output is taken, delete old
+        try
+        {
+            if (fs.existsSync(videoPath))
+            {
+                fs.unlinkSync(videoPath)
+                console.log('Path is taken. Deleting previous file...');
+            } else
+            {
+                console.log('File path is open.')
+            }
+        } catch (err)
+        {
+            console.log('Edit Path Error: ' + err.message);
+        }
+
+        console.log('Merging videos together...');
         //Merge all videos into one
         mergedVideo.mergeToFile(videoPath, './tmp/')
             .on('error', (err) =>
@@ -175,6 +198,12 @@ module.exports = {
                 break
             case 'Counter-Strike: Global Offensive':
                 return counterStrikeGlobalOffensiveIntro
+                break
+            case 'Hyper Scape':
+                return hyperScapeIntro
+                break
+            case 'Escape From Tarkov':
+                return escapeFromTarkovIntro
                 break
             default:
                 return defaultIntro
