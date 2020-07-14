@@ -29,139 +29,182 @@ let videoTitle = 'default'
 let videoDescription = 'default desc'
 //Tags for next video
 let videoTags = []
+//Thumbnail for next video
+let thumbnail = './thumbnails/Default.jpg'
 
 //Open server on port 5000
 let server = new Lien({
-    host: 'localhost',
-    port: 5000
+  host: 'localhost',
+  port: 5000
 })
 
 //Authentication for youtube application
 let oauth = Youtube.authenticate({
-    type: 'oauth',
-    client_id: Credentials.web.client_id,
-    client_secret: Credentials.web.client_secret,
-    redirect_url: Credentials.web.redirect_uris[0]
+  type: 'oauth',
+  client_id: Credentials.web.client_id,
+  client_secret: Credentials.web.client_secret,
+  redirect_url: Credentials.web.redirect_uris[0]
 })
 
 module.exports = {
 
-    //Upload a video to youtube
-    video: function (videoPath)
+  //Upload a video to youtube
+  video: function (videoPath)
+  {
+    //Set video path
+    video = videoPath
+
+    //Log uploaded video
+    console.log('Uploading ' + videoPath + ' to Youtube. Please login...')
+
+    //Get oauth2 token using opn
+    opn(oauth.generateAuthUrl({
+      access_type: 'offline',
+      scope: ['https://www.googleapis.com/auth/youtube.upload']
+    }))
+
+    //Add app.get page to get oauth response and output text
+    server.addPage('/oauth2callback', lien =>
     {
-        //Set video path
-        video = videoPath
-
-        //Log uploaded video
-        console.log('Uploading ' + videoPath + ' to Youtube. Please login...')
-
-        //Get oauth2 token using opn
-        opn(oauth.generateAuthUrl({
-            access_type: 'offline',
-            scope: ['https://www.googleapis.com/auth/youtube.upload']
-        }))
-
-        //Add app.get page to get oauth response and output text
-        server.addPage('/oauth2callback', lien =>
+      //Log token grab with logger
+      Logger.log('Trying to get the token using the following code: ' + lien.query.code)
+      //Attempt to get token from youtube services
+      oauth.getToken(lien.query.code, (err, tokens) =>
+      {
+        //If error log out
+        if (err)
         {
-            //Log token grab with logger
-            Logger.log('Trying to get the token using the following code: ' + lien.query.code)
-            //Attempt to get token from youtube services
-            oauth.getToken(lien.query.code, (err, tokens) =>
-            {
-                //If error log out
-                if (err)
-                {
-                    lien.lien(err, 400)
-                    return Logger.log(err)
-                }
+          lien.lien(err, 400)
+          return Logger.log(err)
+        }
 
-                //If no error and received tokens
-                Logger.log('Got the tokens.')
+        //If no error and received tokens
+        Logger.log('Got the tokens.')
 
-                //Set credentials of oauth
-                oauth.setCredentials(tokens)
+        //Set credentials of oauth
+        oauth.setCredentials(tokens)
 
-                //Set text of html response page
-                lien.end(videoTitle + ' | is being uploaded. Check console for progress')
+        //Set text of html response page
+        lien.end(videoTitle + ' | is being uploaded. Check console for progress')
 
-                //Set details of youtube video being uploaded
-                var req = Youtube.videos.insert({
-                    resource: {
-                        snippet: {
-                            title: videoTitle,
-                            description: videoDescription,
-                            tags: videoTags
-                        },
-                        status: {
-                            privacyStatus: 'unlisted'
-                        }
-                    },
-                    part: 'snippet,status',
-                    media: {
-                        body: fs.createReadStream(video)
-                    }
-                }, (err, data) =>
-                {
-                    //On finish exit application
-                    console.log('Finished uploading.')
-                    process.exit()
-                })
-
-                setInterval(() =>
-                {
-                    Logger.log(`${prettyBytes(req.req.connection._bytesDispatched)} bytes uploaded.`)
-                }, 250)
-            })
+        //Set details of youtube video being uploaded
+        var req = Youtube.videos.insert({
+          resource: {
+            snippet: {
+              title: videoTitle,
+              description: videoDescription,
+              tags: videoTags
+            },
+            status: {
+              privacyStatus: 'unlisted'
+            }
+          },
+          part: 'snippet,status',
+          media: {
+            body: fs.createReadStream(video)
+          }
+        }, (err, data) =>
+        {
+          if (err)
+          {
+            console.log('Upload Error: ' + err.message)
+          } else //If no error proceed to thumbnail 
+          {
+            //On finish exit application
+            console.log('Finished uploading.')
+            //console.log(data)
+            this.updateVideoThumbnail(data['id'])
+            clearInterval(uploadTimer)
+            //process.exit()
+          }
         })
 
-    },
-    //Set title of video being created (called from index.js)
-    setVideoTitle: function (videoT)
-    {
-        videoTitle = videoT
-    },
-    //Set description of video being created (called from index.js)
-    setVideoDescription: function (videoDesc)
-    {
-        videoDescription = videoDesc
-    },
-    setVideoTags: function (game)
-    {
-        let tags = []
-        switch (game)
+        let uploadTimer = setInterval(() =>
         {
-            case 'Overwatch':
-                tags = overwatchTags
-                break
-            case 'League of Legends':
-                tags = leagueOfLegendsTags
-                break
-            case 'World of Warcraft':
-                tags = worldOfWarcraftTags
-                break
-            case 'Call of Duty: Modern Warfare':
-                tags = callOfDutyModernWarfareTags
-                break
-            case 'Valorant':
-                tags = valorantTags
-                break
-            case 'Fortnite':
-                tags = fortniteTags
-                break
-            case 'Counter-Strike: Global Offensive':
-                tags = counterStrikeGlobalOffensiveTags
-                break
-            case 'Hyper Scape':
-                tags = hyperScapeTags
-                break
-            case 'Escape From Tarkov':
-                tags = escapeFromTarkovTags
-                break
-            default:
-                tags = defaultTags
-                break
-        }
-        videoTags = tags
+          Logger.log(`${prettyBytes(req.req.connection._bytesDispatched)} bytes uploaded.`)
+        }, 250)
+      })
+    })
+
+  },
+  //Sets thumbnail of youtube video
+  updateVideoThumbnail: function (vidId)
+  {
+    thumbnail = './thumbnails/Default.jpg'
+    console.log('Uploading custom thumbnail...');
+    Youtube.thumbnails.set({
+      videoId: vidId,
+      media: {
+        mimeType: 'image/jpeg',
+        body: fs.createReadStream(thumbnail)
+      }
+    },
+      (err, thumbRes) =>
+      {
+        if (err) console.log('Thumbnail Error: ' + err.message)
+
+        console.log('Thumbnail uploaded.')
+        console.log('\nUpload completed: ' + videoTitle);
+        //console.log(thumbRes)
+      })
+  },
+  //Set title of video being created (called from index.js)
+  setVideoTitle: function (videoT)
+  {
+    videoTitle = videoT
+  },
+  //Set description of video being created (called from index.js)
+  setVideoDescription: function (videoDesc)
+  {
+    videoDescription = videoDesc
+  },
+  //Sets tags for video and thumbnail
+  setVideoDetails: function (game)
+  {
+    let tags = []
+    switch (game)
+    {
+      case 'Overwatch':
+        tags = overwatchTags
+        thumbnail = './thumbnails/overwatch.jpg'
+        break
+      case 'League of Legends':
+        tags = leagueOfLegendsTags
+        thumbnail = './thumbnails/LeagueOfLegends.jpg'
+        break
+      case 'World of Warcraft':
+        tags = worldOfWarcraftTags
+        thumbnail = './thumbnails/WorldOfWarcraft.jpg'
+        break
+      case 'Call of Duty: Modern Warfare':
+        tags = callOfDutyModernWarfareTags
+        thumbnail = './thumbnails/CallOfDutyModernWarfare.jpg'
+        break
+      case 'Valorant':
+        tags = valorantTags
+        thumbnail = './thumbnails/Valorant.jpg'
+        break
+      case 'Fortnite':
+        tags = fortniteTags
+        thumbnail = './thumbnails/Fortnite.jpg'
+        break
+      case 'Counter-Strike: Global Offensive':
+        tags = counterStrikeGlobalOffensiveTags
+        thumbnail = './thumbnails/CounterStrikeGlobalOffensive.jpg'
+        break
+      case 'Hyper Scape':
+        tags = hyperScapeTags
+        thumbnail = './thumbnails/HyperScape.jpg'
+        break
+      case 'Escape From Tarkov':
+        tags = escapeFromTarkovTags
+        thumbnail = './thumbnails/EscapeFromTarkov.jpg'
+        break
+      default:
+        tags = defaultTags
+        thumbnail = './thumbnails/Default.jpg'
+        break
     }
+    videoTags = tags
+  }
 }

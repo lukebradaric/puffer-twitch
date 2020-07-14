@@ -50,6 +50,11 @@ module.exports = {
     //Build a youtube video title from data
     buildVideoTitle: function (game, duration)
     {
+        if (game == 'Call of Duty: Modern Warfare')
+        {
+            game = 'Modern Warfare'
+        }
+
         let dataPath = this.gameToJson(game)
         let rawData = fs.readFileSync(dataPath)
         let gameData = JSON.parse(rawData)
@@ -83,7 +88,7 @@ module.exports = {
         {
             console.log('Updating ' + game + ' data (.json)')
         })
-        console.log('\nVideo title: ' + title + '\n')
+        console.log('\n' + title + '\n')
         return title
     },
     //Build a youtuber video description from data

@@ -118,6 +118,7 @@ module.exports = {
 
         let mergedVideo = fluent_ffmpeg()
 
+        videoName = videoName.replace(/:/g, '-')
         let videoPath = './videos/' + videoName
 
         //Avoid EventEmitter memory leak
