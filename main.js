@@ -1,8 +1,10 @@
+const inquirer = require("inquirer");
+
 const Utils = require("./classes/Utils");
 const Download = require("./classes/Download");
 const Edit = require("./classes/Edit");
 const Upload = require("./classes/Upload");
-const Webhook = require('./classes/Webhook')
+const Webhook = require("./classes/Webhook");
 
 const config = require("./data/config.json");
 
@@ -85,7 +87,7 @@ class Puffer
                   .then(() =>
                   {
                     Download.delete(this.task); // deletes downloaded clips
-                    this.task.title = Utils.buildTitle(this.task) // Update video title
+                    this.task.title = Utils.buildTitle(this.task); // Update video title
                     Upload.upload(this.task) // Uploads video
                       .then((video) =>
                       {
@@ -93,11 +95,11 @@ class Puffer
                         Upload.thumbnail(this.task) // Update video thumbnail
                           .then((thumbnail) =>
                           {
-                            this.task.video.thumbnail = thumbnail
+                            this.task.video.thumbnail = thumbnail;
                             Webhook.send(this.task).then(() =>
                             {
-                              process.exit()
-                            })
+                              process.exit();
+                            });
                           })
                           .catch((err) =>
                           {
@@ -130,10 +132,63 @@ class Puffer
   }
 }
 
-// Initialize Task
-new Puffer({
-  type: "game",
-  name: "overwatch",
-  period: "day",
-  limit: 1,
-});
+function input()
+{
+  let type;
+  let name;
+  let period;
+  let limit;
+  inquirer
+    .prompt({
+      type: "list",
+      name: "type",
+      message: "Select type",
+      choices: config.taskSchema.types,
+    })
+    .then((choice) =>
+    {
+      type = choice.type;
+      let prompt = {
+        type: type == "game" ? "list" : "input",
+        name: "name",
+        message: type == "game" ? "Select game" : "Type channel",
+        choices: config.games.map((g) => g.name),
+      };
+      if (type.game == "game")
+        prompt = { ...prompt, choices: config.games.map((g) => g.name) };
+      inquirer.prompt(prompt).then((choice) =>
+      {
+        name = choice.name;
+        inquirer
+          .prompt({
+            type: "list",
+            name: "period",
+            message: "Select type",
+            choices: ["day", "week", "month", "all"],
+          })
+          .then((choice) =>
+          {
+            period = choice.period;
+            inquirer
+              .prompt({
+                type: "input",
+                name: "limit",
+                message: "Input limit (null or #)",
+              })
+              .then((choice) =>
+              {
+                limit = choice.limit;
+                // Initialize Task
+                new Puffer({
+                  type: type,
+                  name: name,
+                  period: period,
+                  limit: limit,
+                });
+              });
+          });
+      });
+    });
+}
+
+input();
