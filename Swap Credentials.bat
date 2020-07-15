@@ -1,0 +1,2 @@
+cd data
+node swap

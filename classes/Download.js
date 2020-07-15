@@ -43,14 +43,17 @@ module.exports = {
             c // Creates an array of clip objects
           ) =>
           {
+            //Download max of 600 seconds worth of clips
             if (clipsDuration < 600)
+            {
+              clipsDuration += c.duration;
               return {
                 // Create clip object to map into filtered clips array
                 name: uuid(),
                 link: Utils.imgToVideo(c.thumbnails.small),
                 broadcaster: c.broadcaster.display_name,
               };
-            clipsDuration += c.duration;
+            }
           }
         )
         .filter((i) => i != undefined);

@@ -7,7 +7,7 @@ const baseTwitchLink = "https://api.twitch.tv/kraken/clips/top?";
 const useTrending = "&trending=false"; // should clips requested using trending tag
 const defaultLanguage = "&language=en&"; // default language for clips requested
 
-const defaultClipLimit = 50; // If no limit specified, grab only up to 50 clips
+const defaultClipLimit = 80; // If no limit specified, grab only up to 80 clips
 
 const config = require('../data/config.json')
 
@@ -33,10 +33,6 @@ module.exports = {
   // Builds a video description from a task
   buildTitle: function (task)
   {
-    let gameName = task.game.name
-    let capi = gameName[0].toUpperCase() //capitalize first letter
-    gameName = capi + gameName.substring(1, gameName.length)
-
     //Update upload count of video by object and period
     config.games[config.games.indexOf(task.game)].uploads[task.period] += 1
     fs.writeFileSync('./data/config.json', JSON.stringify(config, null, 2), (err, data) =>
@@ -63,7 +59,7 @@ module.exports = {
         break
     }
 
-    return gameName + ' - ' + period + ' Highlights ' + '#' + videoNumber
+    return task.game.twitchName + ' - ' + period + ' Highlights ' + '#' + videoNumber
   },
   // Builds a video description from a task
   buildDescription: function (task)
@@ -78,8 +74,9 @@ module.exports = {
       // Make sure each broadcaster is only added once
       if (!addedBroadcasters.includes(clip.broadcaster))
       {
-        desc += clip.broadcaster + '\n'
+        desc += `https://twitch.tv/${clip.broadcaster}\n`
       }
+      addedBroadcasters.push(clip.broadcaster)
     }
 
     return desc

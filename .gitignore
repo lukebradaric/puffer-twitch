@@ -2,6 +2,8 @@ data/clips
 data/intros
 data/thumbnails
 data/videos
+data/fonts
+old
 node_modules
 ffmpeg.exe
 ffprobe.exe

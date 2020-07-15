@@ -28,7 +28,7 @@ module.exports = {
                 footer: {
                   text: "Puffer",
                   icon_url:
-                    "https://cdn.discordapp.com/attachments/256975034315177995/732727620982145084/Puffer-Icon.png",
+                    "https://cdn.discordapp.com/attachments/566403701791653899/733075883706941490/Puffer-Logo.png",
                 },
                 image: {
                   url: task.video.thumbnail.items[0].maxres.url,
@@ -37,7 +37,7 @@ module.exports = {
             ],
             username: "Puffer",
             avatar_url:
-              "https://cdn.discordapp.com/attachments/256975034315177995/732727620982145084/Puffer-Icon.png",
+              "https://cdn.discordapp.com/attachments/566403701791653899/733075883706941490/Puffer-Logo.png",
           }),
           gzip: true,
         }

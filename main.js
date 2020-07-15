@@ -1,3 +1,6 @@
+//Avoid EventEmitter memory leak
+process.setMaxListeners(0);
+
 const inquirer = require("inquirer");
 
 const Utils = require("./classes/Utils");
@@ -48,7 +51,7 @@ class Puffer
         {
           // If task type is game
           let game = config.games.find(
-            (g) => g.name.toLowerCase() == this.task.name
+            (g) => g.name == this.task.name
           ); // If game name is valid (from pre-defined list)
           if (game)
           {
@@ -132,6 +135,7 @@ class Puffer
   }
 }
 
+// Prompt user for input to create video with
 function input()
 {
   let type;
@@ -178,6 +182,8 @@ function input()
               .then((choice) =>
               {
                 limit = choice.limit;
+                if (limit == "null") limit = null
+                if (limit == 0) limit = null
                 // Initialize Task
                 new Puffer({
                   type: type,
