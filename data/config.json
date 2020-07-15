@@ -1,0 +1,234 @@
+{
+  "taskSchema": {
+    "types": [
+      "game",
+      "channel"
+    ],
+    "period": [
+      "day",
+      "week",
+      "month",
+      "all"
+    ]
+  },
+  "games": [
+    {
+      "name": "valorant",
+      "twitchName": "VALORANT",
+      "tags": [
+        "valorant",
+        "valorant highlights",
+        "valorant clips",
+        "valorant streamers",
+        "valorant clips",
+        "valorant moments",
+        "valorant streams",
+        "valorant plays",
+        "valorant guide",
+        "valorant top plays",
+        "valorant top clips"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    },
+    {
+      "name": "overwatch",
+      "twitchName": "Overwatch",
+      "tags": [
+        "overwatch",
+        "overwatch highlights",
+        "overwatch twitch",
+        "twitch",
+        "twitch highlights",
+        "overwatch clips",
+        "genji",
+        "mercy",
+        "lucio",
+        "dva",
+        "overwatch league",
+        "overwatch competitive",
+        "overwatch guide",
+        "overwatch moments"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    },
+    {
+      "name": "counterStrikeGlobalOffensive",
+      "twitchName": "Counter-Strike: Global Offensive",
+      "tags": [
+        "csgo",
+        "csgo clips",
+        "csgo highlights",
+        "csgo pros",
+        "csgo twitch",
+        "csgo moments",
+        "counter strike",
+        "counter strike global offensive",
+        "csgo best moments",
+        "csgo plays",
+        "csgo best plays"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    },
+    {
+      "name": "worldOfWarcraft",
+      "twitchName": "World of Warcraft",
+      "tags": [
+        "world of warcraft",
+        "wow",
+        "world of warcraft highlights",
+        "wow highlights",
+        "world of warcraft twitch",
+        "wow twitch",
+        "world of warcraft clips",
+        "wow clips",
+        "asmongold",
+        "esfandtv",
+        "sodapoppin",
+        "world of warcraft streamers",
+        "wow streamers",
+        "world of warcraft moments",
+        "wow moments"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    },
+    {
+      "name": "leagueOfLegends",
+      "twitchName": "League of Legends",
+      "tags": [
+        "league of legends",
+        "lol",
+        "league of legends twitch",
+        "lol twitch",
+        "league of legends highlights",
+        "lol highlights",
+        "league highlights",
+        "league twitch",
+        "lol clips",
+        "league clips",
+        "league ranked",
+        "league streamers",
+        "lol streamers",
+        "league of legends streamers",
+        "league of legends moments",
+        "lol moments"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    },
+    {
+      "name": "fortnite",
+      "twitchName": "Fortnite",
+      "tags": [
+        "fornite",
+        "fortnite twitch",
+        "ninja",
+        "fortnite moments",
+        "fortnite clips",
+        "fortnite streamers",
+        "fornite guide",
+        "fortnite stream",
+        "fortnite highlights"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    },
+    {
+      "name": "escapeFromTarkov",
+      "twitchName": "Escape From Tarkov",
+      "tags": [
+        "tarkov",
+        "escape from tarkov",
+        "tarkov highlights",
+        "tarkov clips",
+        "escape from tarkov highlights",
+        "escape from tarkov clips",
+        "tarkov twitch",
+        "escape from tarkov twitch",
+        "tarkov twitch highlights",
+        "tarkov streamers",
+        "tarkov streams",
+        "shroud",
+        "pestily",
+        "tarkov guide"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    },
+    {
+      "name": "modernWarfare",
+      "twitchName": "Call of Duty: Modern Warfare",
+      "tags": [
+        "modern warfare",
+        "warzone",
+        "warzone twitch",
+        "modern warfare twitch",
+        "warzone moments",
+        "modern warfare moments",
+        "warzone highlights",
+        "warzone clips",
+        "modern warfare clips",
+        "modern warfare warzone",
+        "warzone streamers",
+        "modern warfare streamers"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    },
+    {
+      "name": "hyperScape",
+      "twitchName": "Hyper Scape",
+      "tags": [
+        "hyper scape",
+        "hyper scape twitch",
+        "hyperscape",
+        "hyperscale twitch",
+        "hyperscape highlights",
+        "hyper scape highlights",
+        "hyperscape clips",
+        "hyper scape clips"
+      ],
+      "uploads": {
+        "day": 1,
+        "week": 1,
+        "month": 1,
+        "all": 1
+      }
+    }
+  ]
+}

@@ -1,8 +1,8 @@
-secret.json
-node_modules/*
-clips/*
-videos/*
-intros/*
-credentials/*
+data/clips
+data/intros
+data/thumbnails
+data/videos
+node_modules
 ffmpeg.exe
 ffprobe.exe
+puffer.bat
