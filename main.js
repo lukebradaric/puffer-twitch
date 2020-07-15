@@ -72,13 +72,13 @@ class Puffer
   run()
   {
     let link = Utils.buildLink(this.task);
-    Download.fetchClips(link)
+    Download.fetchClips(link) // Gets json of clips from twitch
       .then(
         (
           rawClips // Gets json file from twitch
         ) =>
         {
-          Download.downloadClips(rawClips)
+          Download.downloadClips(rawClips) // Downloads amount of clips we want (limit or time limit)
             .then(
               (
                 filteredClips // Filters and downloads clips
@@ -86,7 +86,7 @@ class Puffer
               {
                 this.task.clips = filteredClips; // Assigns clips to task
                 this.task.description = Utils.buildDescription(this.task); // Video description based on filtered clips
-                Edit.merge(this.task)
+                Edit.merge(this.task) // Edit all clips together into video
                   .then(() =>
                   {
                     Download.delete(this.task); // deletes downloaded clips
@@ -98,10 +98,11 @@ class Puffer
                         Upload.thumbnail(this.task) // Update video thumbnail
                           .then((thumbnail) =>
                           {
-                            this.task.video.thumbnail = thumbnail;
-                            Webhook.send(this.task).then(() =>
+                            this.task.video.thumbnail = thumbnail; // Update task thumbnail for webhook
+                            Webhook.send(this.task).then(() => // Send message to discord server
                             {
-                              process.exit();
+                              input() // Loop whole process again for another video
+                              //process.exit();
                             });
                           })
                           .catch((err) =>
