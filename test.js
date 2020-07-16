@@ -1,15 +1,22 @@
-let j = 5;
+let thumb = require('./classes/Thumbnail')
 
-
-async function gays()
+function run()
 {
-  console.log("hi");
-  for (let i = 0; i < j; i++)
-  {
-    await (
-      console.log(i)
-    );
+  let obj = {
+    game: {
+      name: 'overwatch',
+      thumbName: 'overwatch',
+      uploads: {
+        daily: 4
+      }
+    },
+    period: 'daily',
+    name: 'name'
   }
+
+  thumb.build(obj)
+  // let newThumb = thumb.build(obj)
+  // console.log(newThumb);
 }
 
-gays()
+run()

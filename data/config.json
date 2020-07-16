@@ -15,6 +15,7 @@
     {
       "name": "valorant",
       "twitchName": "VALORANT",
+      "thumbName": "Valorant",
       "tags": [
         "valorant",
         "valorant highlights",
@@ -38,6 +39,7 @@
     {
       "name": "overwatch",
       "twitchName": "Overwatch",
+      "thumbName": "Overwatch",
       "tags": [
         "overwatch",
         "overwatch highlights",
@@ -55,8 +57,8 @@
         "overwatch moments"
       ],
       "uploads": {
-        "day": 1,
-        "week": 2,
+        "day": 5,
+        "week": 1,
         "month": 1,
         "all": 1
       }
@@ -64,6 +66,7 @@
     {
       "name": "counterStrikeGlobalOffensive",
       "twitchName": "Counter-Strike: Global Offensive",
+      "thumbName": "CSGO",
       "tags": [
         "csgo",
         "csgo clips",
@@ -87,6 +90,7 @@
     {
       "name": "worldOfWarcraft",
       "twitchName": "World of Warcraft",
+      "thumbName": "WOW",
       "tags": [
         "world of warcraft",
         "wow",
@@ -114,6 +118,7 @@
     {
       "name": "leagueOfLegends",
       "twitchName": "League of Legends",
+      "thumbName": "LoL",
       "tags": [
         "league of legends",
         "lol",
@@ -142,6 +147,7 @@
     {
       "name": "fortnite",
       "twitchName": "Fortnite",
+      "thumbName": "Fortnite",
       "tags": [
         "fornite",
         "fortnite twitch",
@@ -163,6 +169,7 @@
     {
       "name": "escapeFromTarkov",
       "twitchName": "Escape From Tarkov",
+      "thumbName": "Tarkov",
       "tags": [
         "tarkov",
         "escape from tarkov",
@@ -189,6 +196,7 @@
     {
       "name": "modernWarfare",
       "twitchName": "Call of Duty: Modern Warfare",
+      "thumbName": "MW",
       "tags": [
         "modern warfare",
         "warzone",
@@ -213,6 +221,7 @@
     {
       "name": "hyperScape",
       "twitchName": "Hyper Scape",
+      "thumbName": "Hyper Scape",
       "tags": [
         "hyper scape",
         "hyper scape twitch",

@@ -7,6 +7,7 @@ const Utils = require("./classes/Utils");
 const Download = require("./classes/Download");
 const Edit = require("./classes/Edit");
 const Upload = require("./classes/Upload");
+const Thumbnail = require("./classes/Thumbnail")
 const Webhook = require("./classes/Webhook");
 
 const config = require("./data/config.json");
@@ -95,22 +96,29 @@ class Puffer
                       .then((video) =>
                       {
                         this.task.video = video;
-                        Upload.thumbnail(this.task) // Update video thumbnail
-                          .then((thumbnail) =>
-                          {
-                            this.task.video.thumbnail = thumbnail; // Update task thumbnail for webhook
-                            Webhook.send(this.task).then(() => // Send message to discord server
+                        Thumbnail.build(this.task).then(() => // Build thumbnail for upload
+                        {
+                          Upload.thumbnail(this.task) // Update video thumbnail
+                            .then((thumbnail) =>
                             {
-                              input() // Loop whole process again for another video
-                              //process.exit();
+                              this.task.video.thumbnail = thumbnail; // Update task thumbnail for webhook
+                              Webhook.send(this.task).then(() => // Send message to discord server
+                              {
+                                input() // Loop whole process again for another video
+                                //process.exit();
+                              });
+                            })
+                            .catch((err) =>
+                            {
+                              this.logger.error(
+                                `Error updating video thumbnail : ${err}`
+                              );
                             });
-                          })
+                        })
                           .catch((err) =>
                           {
-                            this.logger.error(
-                              `Error updating video thumbnail : ${err}`
-                            );
-                          });
+                            this.logger.error('Error generating thumbnail: ' + err)
+                          })
                       })
                       .catch((err) =>
                       {

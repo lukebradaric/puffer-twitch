@@ -5,6 +5,7 @@ const opn = require('opn')
 const prettyBytes = require('pretty-bytes')
 
 const Utils = require('./Utils')
+const Thumbnail = require('./Thumbnail')
 const logger = require('./Logger')('UPLOAD')
 
 const credentials = require('../data/credentials.json')
@@ -101,7 +102,7 @@ module.exports = {
         videoId: task.video.id,
         media: {
           mimeType: 'image/jpeg',
-          body: fs.createReadStream(`./data/thumbnails/${task.game.name}.jpg`) //ex: overwatch.jpg
+          body: fs.createReadStream('./data/thumbnails/generated.jpg') //ex: overwatch.jpg
         }
       },
         (err, result) =>

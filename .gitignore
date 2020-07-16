@@ -8,3 +8,4 @@ node_modules
 ffmpeg.exe
 ffprobe.exe
 puffer.bat
+swap credentials.bat
