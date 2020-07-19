@@ -7,7 +7,7 @@ const baseTwitchLink = "https://api.twitch.tv/kraken/clips/top?";
 const useTrending = "&trending=false"; // should clips requested using trending tag
 const defaultLanguage = "&language=en&"; // default language for clips requested
 
-const defaultClipLimit = 80; // If no limit specified, grab only up to 80 clips
+const defaultClipLimit = 40; // If no limit specified, grab only up to 80 clips
 
 const config = require('../data/config.json')
 
@@ -59,7 +59,13 @@ module.exports = {
         break
     }
 
-    return task.game.twitchName + ' - ' + period + ' Highlights ' + '#' + videoNumber
+    let gameName = task.game.twitchName
+    if (gameName == 'Call of Duty: Modern Warfare')
+    {
+      gameName = 'Modern Warfare'
+    }
+    // return task.game.twitchName + ' - ' + period + ' Highlights ' + '#' + videoNumber IF YOU WANT PERIOD
+    return task.game.twitchName + ' - Twitch Highlights ' + '#' + videoNumber
   },
   // Builds a video description from a task
   buildDescription: function (task)

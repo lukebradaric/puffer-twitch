@@ -60,7 +60,7 @@ module.exports = {
                 tags: task.game.tags
               },
               status: {
-                privacyStatus: 'unlisted'
+                privacyStatus: 'public'
               }
             },
             part: 'snippet,status',
@@ -95,28 +95,37 @@ module.exports = {
       // let period = task.period
       // period[0] = period[0].toUpperCase()
       // REPLACE LINE body: fs.createReadStream(`./data/thumbnails/${task.game.name}${period}.jpg`) //ex: overwatchDay.jpg
-
-      //get thumbnail for video type
-      logger.info('Updating thumbnail')
-      Youtube.thumbnails.set({
-        videoId: task.video.id,
-        media: {
-          mimeType: 'image/jpeg',
-          body: fs.createReadStream('./data/thumbnails/generated.jpg') //ex: overwatch.jpg
-        }
-      },
-        (err, result) =>
-        {
-          if (err)
-          {
-            logger.error('Failed to upload thumbnail')
-            reject(err)
+      let fileStream = fs.createReadStream('./data/thumbnails/generated.jpg')
+      fileStream.on('open', (fd) => // Wait for file stream to open then upload thumbnail
+      {
+        //get thumbnail for video type
+        logger.info('Updating thumbnail')
+        Youtube.thumbnails.set({
+          videoId: task.video.id,
+          media: {
+            mimeType: 'image/jpeg',
+            body: fs.readFileSync('./data/thumbnails/generated.jpg')
+            //Buffer.from('./data/thumbnails/generated.jpg')
+            //fs.createReadStream('./data/thumbnails/generated.jpg') //ex: overwatch.jpg
           }
+        },
+          (err, result) =>
+          {
+            if (err)
+            {
+              logger.error('Failed to upload thumbnail')
+              reject(err)
+            }
 
-          logger.success('Thumbnail successfully updated')
-          logger.success(`Video Success: ${task.title}`)
-          resolve(result)
-        })
+            logger.success('Thumbnail successfully updated')
+            logger.success(`Video Success: ${task.title}`)
+            resolve(result)
+          })
+      })
+      fileStream.on('error', (err) =>
+      {
+        console.log('BRUH N: ' + err.message)
+      })
     })
   }
 }

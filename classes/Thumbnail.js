@@ -9,7 +9,7 @@ module.exports = {
     {
       let fileName
       let loadedImage
-      let caption = task.game.thumbName + ' highlights #' + task.game.uploads[task.period]
+      let caption = task.game.thumbName + ' highlights  #' + task.game.uploads[task.period]
       let dir = `./data/thumbnails/${task.game.name}/`
       fs.readdir(dir, (err, files) => // Get random file from game folder
       {

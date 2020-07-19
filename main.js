@@ -104,9 +104,13 @@ class Puffer
                               this.task.video.thumbnail = thumbnail; // Update task thumbnail for webhook
                               Webhook.send(this.task).then(() => // Send message to discord server
                               {
-                                input() // Loop whole process again for another video
-                                //process.exit();
-                              });
+                                //input() // Loop whole process again for another video
+                                process.exit();
+                              })
+                                .catch((err) =>
+                                {
+                                  this.logger.error(`Error sending webhook : ${err}`)
+                                })
                             })
                             .catch((err) =>
                             {

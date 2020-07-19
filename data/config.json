@@ -30,10 +30,10 @@
         "valorant top clips"
       ],
       "uploads": {
-        "day": 1,
+        "day": 3,
         "week": 1,
-        "month": 1,
-        "all": 1
+        "month": 0,
+        "all": 0
       }
     },
     {
@@ -57,10 +57,10 @@
         "overwatch moments"
       ],
       "uploads": {
-        "day": 5,
+        "day": 1,
         "week": 1,
-        "month": 1,
-        "all": 1
+        "month": 0,
+        "all": 0
       }
     },
     {
@@ -81,10 +81,10 @@
         "csgo best plays"
       ],
       "uploads": {
-        "day": 1,
-        "week": 1,
-        "month": 1,
-        "all": 1
+        "day": 0,
+        "week": 0,
+        "month": 0,
+        "all": 0
       }
     },
     {
@@ -109,16 +109,16 @@
         "wow moments"
       ],
       "uploads": {
-        "day": 1,
+        "day": 3,
         "week": 1,
-        "month": 1,
-        "all": 1
+        "month": 0,
+        "all": 0
       }
     },
     {
       "name": "leagueOfLegends",
       "twitchName": "League of Legends",
-      "thumbName": "LoL",
+      "thumbName": "lol",
       "tags": [
         "league of legends",
         "lol",
@@ -138,16 +138,16 @@
         "lol moments"
       ],
       "uploads": {
-        "day": 2,
+        "day": 3,
         "week": 1,
-        "month": 1,
-        "all": 1
+        "month": 0,
+        "all": 0
       }
     },
     {
       "name": "fortnite",
       "twitchName": "Fortnite",
-      "thumbName": "Fortnite",
+      "thumbName": "fortnite",
       "tags": [
         "fornite",
         "fortnite twitch",
@@ -160,10 +160,10 @@
         "fortnite highlights"
       ],
       "uploads": {
-        "day": 1,
+        "day": 3,
         "week": 1,
-        "month": 1,
-        "all": 1
+        "month": 0,
+        "all": 0
       }
     },
     {
@@ -188,9 +188,9 @@
       ],
       "uploads": {
         "day": 1,
-        "week": 1,
-        "month": 1,
-        "all": 1
+        "week": 0,
+        "month": 0,
+        "all": 0
       }
     },
     {
@@ -213,9 +213,9 @@
       ],
       "uploads": {
         "day": 1,
-        "week": 1,
-        "month": 1,
-        "all": 1
+        "week": 0,
+        "month": 0,
+        "all": 0
       }
     },
     {
@@ -233,10 +233,10 @@
         "hyper scape clips"
       ],
       "uploads": {
-        "day": 1,
-        "week": 1,
-        "month": 1,
-        "all": 1
+        "day": 0,
+        "week": 0,
+        "month": 0,
+        "all": 0
       }
     }
   ]
