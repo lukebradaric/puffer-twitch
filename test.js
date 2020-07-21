@@ -7,7 +7,7 @@ function run()
       name: 'worldOfWarcraft',
       thumbName: 'wow',
       uploads: {
-        daily: 3,
+        daily: 5,
         weekly: 1
       }
     },

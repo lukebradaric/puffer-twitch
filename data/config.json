@@ -30,7 +30,7 @@
         "valorant top clips"
       ],
       "uploads": {
-        "day": 3,
+        "day": 4,
         "week": 1,
         "month": 0,
         "all": 0
@@ -57,7 +57,7 @@
         "overwatch moments"
       ],
       "uploads": {
-        "day": 1,
+        "day": 2,
         "week": 1,
         "month": 0,
         "all": 0
@@ -109,7 +109,7 @@
         "wow moments"
       ],
       "uploads": {
-        "day": 3,
+        "day": 5,
         "week": 1,
         "month": 0,
         "all": 0
@@ -138,7 +138,7 @@
         "lol moments"
       ],
       "uploads": {
-        "day": 3,
+        "day": 5,
         "week": 1,
         "month": 0,
         "all": 0
@@ -160,7 +160,7 @@
         "fortnite highlights"
       ],
       "uploads": {
-        "day": 3,
+        "day": 5,
         "week": 1,
         "month": 0,
         "all": 0
@@ -187,7 +187,7 @@
         "tarkov guide"
       ],
       "uploads": {
-        "day": 1,
+        "day": 2,
         "week": 0,
         "month": 0,
         "all": 0
@@ -231,6 +231,26 @@
         "hyper scape highlights",
         "hyperscape clips",
         "hyper scape clips"
+      ],
+      "uploads": {
+        "day": 0,
+        "week": 0,
+        "month": 0,
+        "all": 0
+      }
+    },
+    {
+      "name": "justChatting",
+      "twitchName": "Just Chatting",
+      "thumbName": "just chatting",
+      "tags": [
+        "chatting",
+        "twitch",
+        "sexy",
+        "girl streamers",
+        "egirl",
+        "chatting moments",
+        "twitch highlights"
       ],
       "uploads": {
         "day": 0,
