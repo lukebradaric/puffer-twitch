@@ -7,7 +7,7 @@ const baseTwitchLink = "https://api.twitch.tv/kraken/clips/top?";
 const useTrending = "&trending=false"; // should clips requested using trending tag
 const defaultLanguage = "&language=en&"; // default language for clips requested
 
-const defaultClipLimit = 40; // If no limit specified, grab only up to 80 clips
+const defaultClipLimit = 30; // If no limit specified, grab only up to 80 clips
 
 const config = require('../data/config.json')
 
@@ -70,7 +70,7 @@ module.exports = {
   // Builds a video description from a task
   buildDescription: function (task)
   {
-    let desc = 'Streamers featured in this video:\n'
+    let desc = 'Join our discord! https://discord.gg/HKKTtsa\n\nStreamers featured in this video:\n'
 
     let addedBroadcasters = []
 

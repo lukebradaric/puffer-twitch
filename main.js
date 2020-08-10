@@ -143,7 +143,7 @@ class Puffer
       )
       .catch((err) =>
       {
-        this.logger.error(`Error fetching clips : ${err}`); // Logs fetch error
+        this.logger.error(`Error fetching clips : ${err} ${err.message}`); // Logs fetch error
       });
   }
 }

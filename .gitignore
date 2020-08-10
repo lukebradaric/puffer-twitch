@@ -3,6 +3,8 @@ data/intros
 data/thumbnails
 data/videos
 data/fonts
+data/credentials.json
+data/credentials-product.json
 old
 node_modules
 ffmpeg.exe

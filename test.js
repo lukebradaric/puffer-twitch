@@ -4,10 +4,10 @@ function run()
 {
   let obj = {
     game: {
-      name: 'worldOfWarcraft',
-      thumbName: 'wow',
+      name: 'valorant',
+      thumbName: 'valorant',
       uploads: {
-        daily: 5,
+        daily: 10,
         weekly: 1
       }
     },
