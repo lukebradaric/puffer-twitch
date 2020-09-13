@@ -13,16 +13,16 @@
   },
   "games": [
     {
-      "name": "fallGuys",
-      "twitchName": "Fall Guys",
-      "thumbName": "fall guys",
+      "name": "amongUs",
+      "twitchName": "Among Us",
+      "thumbName": "among us",
       "tags": [
-        "fall guys",
+        "among us guys",
         "twitch",
-        "fall guys twitch",
-        "fall guys funny",
-        "fall guys moments",
-        "fall guys hightlights",
+        "among us twitch",
+        "among us funny",
+        "among us moments",
+        "among us hightlights",
         "twitch moments"
       ],
       "uploads": {
@@ -50,7 +50,7 @@
         "valorant top clips"
       ],
       "uploads": {
-        "day": 15,
+        "day": 17,
         "week": 1,
         "month": 0,
         "all": 0
@@ -129,7 +129,7 @@
         "wow moments"
       ],
       "uploads": {
-        "day": 13,
+        "day": 14,
         "week": 1,
         "month": 0,
         "all": 0
@@ -158,7 +158,7 @@
         "lol moments"
       ],
       "uploads": {
-        "day": 12,
+        "day": 13,
         "week": 1,
         "month": 0,
         "all": 0
